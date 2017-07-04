@@ -21,41 +21,48 @@ class SliderAlt
     @text = text
     @dragging = false
     @font = Gosu::Font.new(FONT_SIZE, {name: 'slider_font'})
-    @pointerx = @x + @pos * @length - PWIDTH / 2
-    @pointery = @y + MARGIN + LHEIGHT
+    @selectorx = @x + @pos * @length - PWIDTH / 2
+    @selectory = @y + MARGIN + LHEIGHT
     @dir = 'up'
+    @dragging = false
   end
 
   def value
     (@max - @min) * @pos + @min
   end
 
-  def max
-    @max
+  def max; @max; end
+  def min; @min; end
+
+  def check_clicking
+    if @window.button_down?(Gosu::MsLeft)
+      if check_mouse(@window.mouse_x, @window.mouse_y, @selectorx, @selectory - PHEIGHT, @selectorx + PWIDTH, @selectory)
+        @dragging = true
+      end
+    else
+      @dragging = false
+    end
+  end
+
+  def drag
+    if @window.mouse_x < @x
+      @pos = 0
+    elsif @window.mouse_x > @x + @length
+      @pos = 1
+    else
+      @pos = (@window.mouse_x - @x) / @length
+    end
   end
 
   def update
-    if @dir == 'up'
-      unless @pos >= 1
-        @pos += 0.01
-      else
-        @dir = 'down'
-        @pos -= 0.01
-      end
-    else
-      unless @pos <= 0
-        @pos -= 0.01
-      else
-        @dir = 'up'
-        @pos += 0.01
-      end
-    end
-    @pointerx = @x + @pos * @length - PWIDTH / 2
-    @pointery = @y + MARGIN + LHEIGHT
+    check_clicking
+    drag if @dragging
+    @selectorx = @x + @pos * @length - PWIDTH / 2
+    @selectory = @y + MARGIN + LHEIGHT
   end
 
   def draw_pointer
-    x, y = @pointerx, @pointery
+    x, y = @selectorx, @selectory
     @window.draw_quad(x, y - PHEIGHT, @color, x + PWIDTH, y - PHEIGHT, @color, x, y - THEIGHT, @color, x + PWIDTH, y - THEIGHT, @color, @z)
     @window.draw_triangle(x, y - THEIGHT, @color, x + PWIDTH / 2, y, @color, x + PWIDTH, y - THEIGHT, @color, @z)
   end
@@ -65,9 +72,9 @@ class SliderAlt
   end
 
   def draw_text
-    @font.draw(@min.round, @x, @y + LHEIGHT + MARGIN, @z, 1, 1, @color)
-    @font.draw_rel(@max.round, @x + @length, @y + LHEIGHT + MARGIN, @z, 1, 0, 1, 1, @color)
-    @font.draw_rel(value.round, @x + @length, @y - MARGIN - QHEIGHT, @z, 1, 1, 1, 1, @color)
+    @font.draw(min.round, @x, @y + LHEIGHT + MARGIN, @z, 1, 1, @color)
+    @font.draw_rel(max.round, @x + @length, @y + LHEIGHT + MARGIN, @z, 1, 0, 1, 1, @color)
+    @font.draw_rel(value.round, @x + @length, @y - MARGIN - QHEIGHT, @z, 1, 1, 1, 1, @color)\
   end
 
   def draw
