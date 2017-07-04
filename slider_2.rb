@@ -11,32 +11,32 @@ class SliderAlt
   FONT_SIZE = 20
 
   def initialize(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true)
-    @window = window
+    @win = window
     @x, @y, @z = x, y, z
-    @length = length
+    @l = length
     @max, @min = max, min
-    @pos = pos
+    @pos = pos.to_f
     @markers = markers
-    @color = color
+    @col = color
     @text = text
     @dragging = false
     @font = Gosu::Font.new(FONT_SIZE, {name: 'slider_font'})
-    @selectorx = @x + @pos * @length - PWIDTH / 2
+    @selectorx = @x + @pos * @l - PWIDTH / 2
     @selectory = @y + MARGIN + LHEIGHT
     @dir = 'up'
     @dragging = false
   end
 
-  def value
-    (@max - @min) * @pos + @min
+  def value(pos = @pos)
+    (@max - @min) * pos + @min
   end
 
   def max; @max; end
   def min; @min; end
 
   def check_clicking
-    if @window.button_down?(Gosu::MsLeft)
-      if check_mouse(@window.mouse_x, @window.mouse_y, @selectorx, @selectory - PHEIGHT, @selectorx + PWIDTH, @selectory)
+    if @win.button_down?(Gosu::MsLeft)
+      if check_mouse(@win.mouse_x, @win.mouse_y, @selectorx, @selectory - PHEIGHT, @selectorx + PWIDTH, @selectory)
         @dragging = true
       end
     else
@@ -45,41 +45,52 @@ class SliderAlt
   end
 
   def drag
-    if @window.mouse_x < @x
+    if @win.mouse_x < @x
       @pos = 0
-    elsif @window.mouse_x > @x + @length
+    elsif @win.mouse_x > @x + @l
       @pos = 1
     else
-      @pos = (@window.mouse_x - @x) / @length
+      @pos = (@win.mouse_x - @x) / @l
     end
   end
 
   def update
     check_clicking
     drag if @dragging
-    @selectorx = @x + @pos * @length - PWIDTH / 2
+    @selectorx = @x + @pos * @l - PWIDTH / 2
     @selectory = @y + MARGIN + LHEIGHT
   end
 
   def draw_pointer
     x, y = @selectorx, @selectory
-    @window.draw_quad(x, y - PHEIGHT, @color, x + PWIDTH, y - PHEIGHT, @color, x, y - THEIGHT, @color, x + PWIDTH, y - THEIGHT, @color, @z)
-    @window.draw_triangle(x, y - THEIGHT, @color, x + PWIDTH / 2, y, @color, x + PWIDTH, y - THEIGHT, @color, @z)
+    @win.draw_quad(x, y - PHEIGHT, @col, x + PWIDTH, y - PHEIGHT, @col, x, y - THEIGHT, @col, x + PWIDTH, y - THEIGHT, @col, @z)
+    @win.draw_triangle(x, y - THEIGHT, @col, x + PWIDTH / 2, y, @col, x + PWIDTH, y - THEIGHT, @col, @z)
   end
 
   def draw_bar
-    @window.draw_quad(@x, @y, @color, @x + @length, @y, @color, @x, @y + LHEIGHT, @color, @x + @length, @y + LHEIGHT, @color, @z)
+    @win.draw_quad(@x, @y, @col, @x + @l, @y, @col, @x, @y + LHEIGHT, @col, @x + @l, @y + LHEIGHT, @col, @z)
+    @win.draw_quad(@x, @y - LHEIGHT, @col, @x + LHEIGHT, @y - LHEIGHT, @col, @x, @y, @col, @x + LHEIGHT, @y, @col, @z)
+    @win.draw_quad(@x + @l - LHEIGHT, @y - LHEIGHT, @col, @x + @l, @y - LHEIGHT, @col, @x + @l - LHEIGHT, @y, @col, @x + @l, @y, @col, @z)
+  end
+
+  def draw_markers
+    @markers.times do |i|
+      pos = (i + 1).to_f / (@markers + 1).to_f
+      @win.draw_quad(pos * @l + @x - 0.5 * LHEIGHT, @y - LHEIGHT, @col, pos * @l + @x + 0.5 * LHEIGHT, @y - LHEIGHT, @col, pos * @l + @x - 0.5 * LHEIGHT, @y, @col, pos * @l + @x + 0.5 * LHEIGHT, @y, @col, @z)
+      @font.draw_rel(value(pos).round, pos * @l + @x, @y + LHEIGHT + MARGIN, @z, 0.5, 0, 1, 1, @col) if @text
+    end
   end
 
   def draw_text
-    @font.draw(min.round, @x, @y + LHEIGHT + MARGIN, @z, 1, 1, @color)
-    @font.draw_rel(max.round, @x + @length, @y + LHEIGHT + MARGIN, @z, 1, 0, 1, 1, @color)
-    @font.draw_rel(value.round, @x + @length, @y - MARGIN - QHEIGHT, @z, 1, 1, 1, 1, @color)\
+    @font.draw(min.round, @x, @y + LHEIGHT + MARGIN, @z, 1, 1, @col)
+    @font.draw_rel(max.round, @x + @l, @y + LHEIGHT + MARGIN, @z, 1, 0, 1, 1, @col)
+    @font.draw_rel(value.round, @x + @l, @y - MARGIN - QHEIGHT, @z, 1, 1, 1, 1, @col)
   end
 
   def draw
     draw_pointer
     draw_bar
+    draw_markers
     draw_text if @text
   end
 

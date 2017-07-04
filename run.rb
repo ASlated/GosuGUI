@@ -10,7 +10,7 @@ class GameWindow < Gosu::Window
     super(720, 480)
     self.caption = 'Input'
     @slider = Slider.new(self, 10, 40, 300, 50, 0.5)
-    @slider_2 = SliderAlt.new(self, 50, 300, 0, 400, 10000)
+    @slider_2 = SliderAlt.new(self, 50, 300, 0, 400, 100, markers: 4, text: false)
     @font = Gosu::Font.new(16, {name: 'default'})
   end
 

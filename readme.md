@@ -37,7 +37,7 @@ length - The display length of the slider.
 max - The value when dragged all the way to the right.
 min - The value when dragged all the way to the left.
 pos - The default position of the selector. 0 is the very left and 1 is the very right.
-markers - Not yet implemented. Will display additional numbers along the bar.
+markers - The number of markers along the line bar.
 color - The color of the slider. Affects the selector, bar, and text.
 text - Whether or not to display the text.
 ```
