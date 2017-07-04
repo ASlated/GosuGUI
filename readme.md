@@ -1,6 +1,8 @@
 # Ruby Gosu Slider
 
-Pretty rough draft of a GUI tool for the Gosu 2D game library.
+GUI tool for the 2D game engine, Gosu. Compatible with Ruby Gosu.
+
+Currently, the tool contains to sliders. The first described in this overview will be deprecated at a later time.
 
 ## Usage of slider.rb
 
@@ -29,7 +31,6 @@ Slider.new(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C,
 ```
 
 ### Slider Arguments
-```
 window - The Gosu Window of the slider.
 x, y - The initial x and y positions of the slider.
 z - The z position of the slider (determines which objects it will display in front of.)
@@ -40,7 +41,6 @@ pos - The default position of the selector. 0 is the very left and 1 is the very
 markers - The number of markers along the line bar.
 color - The color of the slider. Affects the selector, bar, and text.
 text - Whether or not to display the text.
-```
 
 ### Retrieving Information
 ```
