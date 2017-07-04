@@ -15,8 +15,8 @@ class Slider
     @hsize = @scale * 50
     @images = Gosu::Image.load_tiles('./slider.png', 100, 100)
     @pos = 0.5
-    @value = @pos * @max
     @dragging = false
+    @value = @pos * @max
   end
 
   def clicked(mouse_x, mouse_y)
@@ -34,7 +34,16 @@ class Slider
       else
         @pos = (mouse_x - @x) / @length
       end
+      @value = @pos * @max
     end
+  end
+
+  def value
+    @value
+  end
+
+  def max
+    @max
   end
 
   def draw

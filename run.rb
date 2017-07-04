@@ -8,7 +8,7 @@ class GameWindow < Gosu::Window
   def initialize
     super(720, 480)
     self.caption = 'Input'
-    @slider = Slider.new(self, 10, 10, 300, 1000, 0.5)
+    @slider = Slider.new(self, 10, 40, 300, 1000, 0.5)
     @cursor = Gosu::Image.new(self, 'cursor.png')
     @font = Gosu::Font.new(16, {name: 'default'})
   end
@@ -30,7 +30,7 @@ class GameWindow < Gosu::Window
   end
 
   def draw
-    @font.draw_rel(button_down?(Gosu::MsLeft), self.width - 10, self.height - 10, 6, 1, 1)
+    @font.draw("#{@slider.value.to_i}/#{@slider.max}", 10, 10, 6)
     @slider.draw
     # @cursor.draw(self.mouse_x, self.mouse_y, 6)
     draw_quad(self.mouse_x - 5, self.mouse_y - 5, C, self.mouse_x + 5, self.mouse_y - 5, C, self.mouse_x - 5, self.mouse_y + 5, C, self.mouse_x + 5, self.mouse_y + 5, C, 6)
