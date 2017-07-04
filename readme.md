@@ -23,12 +23,12 @@ my_slider.max => 300
 
 ## Usage of slider_2.rb
 
-Slider creation.
+### Creation
 ```
 Slider.new(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true)
 ```
 
-Arguments for creating a new slider.
+### Slider Arguments
 ```
 window - The Gosu Window of the slider.
 x, y - The initial x and y positions of the slider.
@@ -42,7 +42,7 @@ color - The color of the slider. Affects the selector, bar, and text.
 text - Whether or not to display the text.
 ```
 
-Retrieving information.
+### Retrieving Information
 ```
 my_slider = Slider.new(self, 30, 10, 0, 200, 50, pos: 0.2)
 my_slider.value => 10
