@@ -2,7 +2,7 @@
 
 Pretty rough draft of a GUI tool for the Gosu 2D game library.
 
-## Usage
+## Usage of slider.rb
 
 ```
 Slider.new(window, x, y, length, max, scale = 1)
@@ -19,4 +19,33 @@ As shown below, the current value and maximum value of the slider can be retriev
 my_slider = Slider.new(self, 0, 0, 300, 50)
 my_slider.length => 150
 my_slider.max => 300
+```
+
+## Usage of slider_2.rb
+
+Slider creation.
+```
+Slider.new(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C, text: true)
+```
+
+Arguments for creating a new slider.
+```
+window - The Gosu Window of the slider.
+x, y - The initial x and y positions of the slider.
+z - The z position of the slider (determines which objects it will display in front of.)
+length - The display length of the slider.
+max - The value when dragged all the way to the right.
+min - The value when dragged all the way to the left.
+pos - The default position of the selector. 0 is the very left and 1 is the very right.
+markers - Not yet implemented. Will display additional numbers along the bar.
+color - The color of the slider. Affects the selector, bar, and text.
+text - Whether or not to display the text.
+```
+
+Retrieving information.
+```
+my_slider = Slider.new(self, 30, 10, 0, 200, 50, pos: 0.2)
+my_slider.value => 10
+my_slider.min => 0
+my_slider.max => 50
 ```
