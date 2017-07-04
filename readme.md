@@ -31,16 +31,16 @@ Slider.new(window, x, y, z, length, max, min: 0, pos: 0.0, markers: 0, color: C,
 ```
 
 ### Slider Arguments
-window - The Gosu Window of the slider.
-x, y - The initial x and y positions of the slider.
-z - The z position of the slider (determines which objects it will display in front of.)
-length - The display length of the slider.
-max - The value when dragged all the way to the right.
-min - The value when dragged all the way to the left.
-pos - The default position of the selector. 0 is the very left and 1 is the very right.
-markers - The number of markers along the line bar.
-color - The color of the slider. Affects the selector, bar, and text.
-text - Whether or not to display the text.
+- window - The Gosu Window of the slider.
+- x, y - The initial x and y positions of the slider.
+- z - The z position of the slider (determines which objects it will display in front of.)
+- length - The display length of the slider.
+- max - The value when dragged all the way to the right.
+- min - The value when dragged all the way to the left.
+- pos - The default position of the selector. 0 is the very left and 1 is the very right.
+- markers - The number of markers along the line bar.
+- color - The color of the slider. Affects the selector, bar, and text.
+- text - Whether or not to display the text.
 
 ### Retrieving Information
 ```
