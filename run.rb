@@ -8,9 +8,12 @@ class GameWindow < Gosu::Window
   def initialize
     super(720, 480)
     self.caption = 'Input'
-    @slider = Slider.new(self, 10, 40, 300, 1000, 0.5)
-    @cursor = Gosu::Image.new(self, 'cursor.png')
+    @slider = Slider.new(self, 10, 40, 300, 50, 0.5)
     @font = Gosu::Font.new(16, {name: 'default'})
+  end
+
+  def needs_cursor?
+    true
   end
 
   def button_down(id)
@@ -32,7 +35,6 @@ class GameWindow < Gosu::Window
   def draw
     @font.draw("#{@slider.value.to_i}/#{@slider.max}", 10, 10, 6)
     @slider.draw
-    @cursor.draw(self.mouse_x, self.mouse_y, 6)
   end
 
 end
