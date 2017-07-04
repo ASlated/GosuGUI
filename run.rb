@@ -32,8 +32,7 @@ class GameWindow < Gosu::Window
   def draw
     @font.draw("#{@slider.value.to_i}/#{@slider.max}", 10, 10, 6)
     @slider.draw
-    # @cursor.draw(self.mouse_x, self.mouse_y, 6)
-    draw_quad(self.mouse_x - 5, self.mouse_y - 5, C, self.mouse_x + 5, self.mouse_y - 5, C, self.mouse_x - 5, self.mouse_y + 5, C, self.mouse_x + 5, self.mouse_y + 5, C, 6)
+    @cursor.draw(self.mouse_x, self.mouse_y, 6)
   end
 
 end
