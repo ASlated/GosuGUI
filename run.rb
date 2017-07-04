@@ -1,5 +1,6 @@
 require 'gosu'
 require './slider'
+require './slider_2'
 
 class GameWindow < Gosu::Window
 
@@ -9,6 +10,7 @@ class GameWindow < Gosu::Window
     super(720, 480)
     self.caption = 'Input'
     @slider = Slider.new(self, 10, 40, 300, 50, 0.5)
+    @slider_2 = SliderAlt.new(self, 50, 300, 0, 400, 50)
     @font = Gosu::Font.new(16, {name: 'default'})
   end
 
@@ -35,6 +37,7 @@ class GameWindow < Gosu::Window
   def draw
     @font.draw("#{@slider.value.to_i}/#{@slider.max}", 10, 10, 6)
     @slider.draw
+    @slider_2.draw
   end
 
 end
