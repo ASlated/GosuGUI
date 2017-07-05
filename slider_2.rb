@@ -36,10 +36,13 @@ class SliderAlt
 
   def check_clicking
     if @win.button_down?(Gosu::MsLeft)
-      if check_mouse(@win.mouse_x, @win.mouse_y, @selectorx, @selectory - PHEIGHT, @selectorx + PWIDTH, @selectory)
+      if !@already_down && check_mouse(@win.mouse_x, @win.mouse_y, @selectorx, @selectory - PHEIGHT, @selectorx + PWIDTH, @selectory)
         @dragging = true
+      else
+        @already_down = true
       end
     else
+      @already_down = false
       @dragging = false
     end
   end
